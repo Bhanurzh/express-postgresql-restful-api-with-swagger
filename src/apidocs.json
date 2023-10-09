@@ -1,0 +1,254 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Express Postgresql API with Swagger",
+        "version": "1.0.0",
+        "description": "This is a simple CRUD API application made with Express, Postgresql and documented with Swagger",
+        "contact": {
+            "name": "Aswangga Bhanu Rizqullah",
+            "url": "https://github.com/bhanurzh",
+            "email": "aswanggab@gmail.com"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/",
+            "description": "localhost"
+        }
+    ],
+    "tags":
+    [
+        {
+            "name": "Country",
+            "description": "The Country managing API"
+        }
+    ],
+    "paths":{
+        "/api/v1/countries":{
+            "get":{
+                "tags":[
+                    "Country"
+                ],
+                "summary": "Get All Country",
+                "description": "Get country data",
+                "responses": {
+                    "200": {
+                        "description": "Successfully getting countries data",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Country"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description": "Some server error"
+                    }
+                }
+            },
+            "post": {
+                "tags": ["Country"],
+                "summary": "Post Country",
+                "consumes": ["application/json"],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Country"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Data Successfully Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Country"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Some server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/countries/{id}":{
+            "get":{
+                "tags": [
+                    "Country"
+                ],
+                "summary":"Get Country by Id",
+                "description": "Get country data",
+                "parameters":[
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema":{
+                            "type": "integer"
+                        },
+                        "required": "true",
+                        "description": "country id"
+                    }
+                ],
+                "responses":{
+                    "200": {
+                        "description":"Successfully getting country data by id",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "array",
+                                    "items":{
+                                        "$ref": "#/components/schemas/Country"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description": "The Country data not found"
+                    },
+                    "500":{
+                        "description":"Some server error"
+                    }
+                }
+            },
+            "put":{
+                "tags":[
+                    "Country"
+                ],
+                "summary": "Update country by id",
+                "description": "Update country data by id",
+                "parameters":[
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema":{
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "description": "country id"
+                    }
+                ],
+                "requestBody":{
+                    "required": true,
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/Country"
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description": "Country successfully updated",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "$ref": "#/components/schemas/Country"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description": "The Country data not found"
+                    },
+                    "500":{
+                        "description":"Some server error"
+                    }
+                }
+            },
+            "delete":{
+                "tags":[
+                    "Country"
+                ],
+                "summary": "Delete country by id",
+                "description": "Delete country data by id",
+                "parameters":[
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema":{
+                            "type": "integer"
+                        },
+                        "required": "true",
+                        "description": "country id"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "Country successfully deleted"
+                    },
+                    "404":{
+                        "description": "The Country data not found"
+                    },
+                    "500":{
+                        "description":"Some server error"
+                    }
+                }
+            }
+        }
+    },
+    "components":{
+        "schemas":{
+            "Country":{
+                "type": "object",
+                "required": [
+                    "id",
+                    "iso",
+                    "name",
+                    "nicename",
+                    "phonecode"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "The id of the country"
+                    },
+                    "iso": {
+                        "type": "string",
+                        "description": "The ISO of country"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name of country"
+                    },
+                    "nicename": {
+                        "type": "string",
+                        "description": "The nicename of country"
+                    },
+                    "iso3": {
+                        "type": "string",
+                        "description": "The ISO-3 of country"
+                    },
+                    "numcode": {
+                        "type": "integer",
+                        "description": "The numeric code of country"
+                    },
+                    "phonecode": {
+                        "type": "integer",
+                        "description": "The Phone Code of country"
+                    }
+                },
+                "example":{
+                    "id": 252,
+                    "iso": "ab",
+                    "name": "COUNTRY",
+                    "nicename": "Country",
+                    "iso3": "ABC",
+                    "numcode": 360,
+                    "phonecode": 62
+                }    
+            }
+        }
+    }
+}
